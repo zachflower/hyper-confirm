@@ -1,0 +1,24 @@
+{
+  "name": "hyper-confirm",
+  "version": "0.1.0",
+  "description": "Show a confirmation dialog before quitting Hyper",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zachflower/hyper-confirm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zachflower/hyper-confirm/issues"
+  },
+  "homepage": "https://github.com/zachflower/hyper-confirm#readme",
+  "keywords": [
+    "hyper.app",
+    "hyper",
+    "hyperterm",
+    "plugin",
+    "system",
+    "confirm"
+  ],
+  "author": "Zachary Flower <zach@zacharyflower.com>",
+  "license": "MIT"
+}
