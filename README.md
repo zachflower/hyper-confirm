@@ -1,4 +1,4 @@
-[![npm](https://img.shields.io/npm/v/hyper-confirm.svg)](https://www.npmjs.com/package/hpm-confirm) [![npm](https://img.shields.io/npm/dt/hyper-confirm.svg)](https://www.npmjs.com/package/hpm-confirm) [![npm](https://img.shields.io/npm/l/hyper-confirm.svg)](https://www.npmjs.com/package/hpm-confirm)
+[![npm](https://img.shields.io/npm/v/hyper-confirm.svg)](https://www.npmjs.com/package/hyper-confirm) [![npm](https://img.shields.io/npm/dt/hyper-confirm.svg)](https://www.npmjs.com/package/hyper-confirm) [![npm](https://img.shields.io/npm/l/hyper-confirm.svg)](https://www.npmjs.com/package/hyper-confirm)
 
 # hyper-confirm
 
