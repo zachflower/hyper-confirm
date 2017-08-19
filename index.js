@@ -21,8 +21,8 @@ exports.onApp = (app) => {
         type: 'question',
         buttons: ['OK', 'Cancel'],
         defaultId: 0,
-        title: 'Quit HyperTerm?',
-        message: 'Quit HyperTerm?',
+        title: 'Quit Hyper?',
+        message: 'Quit Hyper?',
         detail: 'All sessions will be closed.'
       }, (index) => {
         if (index === 0) {
