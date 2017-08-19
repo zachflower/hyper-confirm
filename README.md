@@ -2,6 +2,8 @@
 
 `hyper-confirm` is a plugin for [Hyper](https://hyper.is/) (formerly HyperTerm) that shows a confirmation dialog before quitting Hyper. This functionality, which is found in other terminal emulators like [iTerm2](https://www.iterm2.com/), provides a safety net against accidentally quitting Hyper (a common problem outlined in Hyper Issue #399).
 
+![](.github/demo.gif)
+
 ## Installation & Configuration
 
 1. Open your Hyper config file (typically `~/.hyper.js`) in your preferred text editor.
