@@ -1,6 +1,6 @@
 {
   "name": "hyper-confirm",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Show a confirmation dialog before quitting Hyper",
   "main": "index.js",
   "repository": {
