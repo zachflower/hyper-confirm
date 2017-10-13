@@ -1,22 +1,13 @@
 const { dialog } = require('electron');
 
 let confirmQuit = false;
+let beforeQuitHandler;
 
-exports.decorateConfig = (config) => {
-  if (config.confirmQuit) {
-    confirmQuit = !!config.confirmQuit;
-  }
-
-  return config;
-};
-
-exports.onApp = (app) => {
+const createBeforeQuitHandler = (app) => {
   let quitConfirmed = false;
-
-  app.on('before-quit', (event) => {
-    if (!!confirmQuit && !quitConfirmed && app.getWindows().size ) {
+  return (event) => {
+    if (confirmQuit && !quitConfirmed && app.getWindows().size ) {
       event.preventDefault();
-
       dialog.showMessageBox({
         type: 'question',
         buttons: ['OK', 'Cancel'],
@@ -31,5 +22,18 @@ exports.onApp = (app) => {
         }
       });
     }
-  });
+  };
+};
+
+exports.decorateConfig = (config) => {
+  if (config.confirmQuit) {
+    confirmQuit = !!config.confirmQuit;
+  }
+  return config;
+};
+
+exports.onApp = (app) => {
+  if (beforeQuitHandler) app.off('before-quit', beforeQuitHandler);
+  beforeQuitHandler = createBeforeQuitHandler(app);
+  app.on('before-quit', beforeQuitHandler);
 }
