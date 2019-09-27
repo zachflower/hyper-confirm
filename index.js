@@ -26,35 +26,63 @@ const createBeforeQuitHandler = (app) => {
 };
 
 exports.decorateConfig = (config) => {
-  if (config.confirmQuit) {
+  if (typeof config.confirmQuit !== undefined) {
     confirmQuit = !!config.confirmQuit;
   }
+
   return config;
 };
 
 exports.onApp = (app) => {
-  if (beforeQuitHandler) app.off('before-quit', beforeQuitHandler);
-  beforeQuitHandler = createBeforeQuitHandler(app);
-  app.on('before-quit', beforeQuitHandler);
-}
-
-
-exports.middleware = (store) => (next) => (action) => {
-  switch ( action.type ) {
-    case 'CLOSE_TAB':
-      console.log("YOU SHALL NOT CLOSE!");
-      break;
-    case 'UI_COMMAND_EXEC':
-      if ( 'pane.close' == action.command ) {
-        console.log("YOU SHALL NOT CLOSE!");
-      }
-
-      next(action);
+  switch ( process.platform ) {
+    case 'win32':
+      // windows confirmations happen in the middleware
       break;
     default:
-      console.log("AHHHHH!");
-      console.log(action);
-      next(action);
+      if ( beforeQuitHandler ) {
+        app.off('before-quit', beforeQuitHandler);
+      }
+
+      beforeQuitHandler = createBeforeQuitHandler(app);
+      app.on('before-quit', beforeQuitHandler);
+
       break;
   }
+};
+
+exports.middleware = (store) => (next) => (action) => {
+  const { dialog, app } = require('electron').remote;
+
+  let confirmQuit = false;
+
+  if ( typeof app.config.getConfig().confirmQuit !== undefined ) {
+    confirmQuit = !!app.config.getConfig().confirmQuit;
+  }
+
+  switch ( process.platform ) {
+    case 'win32':
+      if ( confirmQuit && action.type === 'UI_WINDOW_CLOSE' ) {
+        dialog.showMessageBox({
+          type: 'question',
+          buttons: ['OK', 'Cancel'],
+          defaultId: 0,
+          title: 'Quit Hyper?',
+          message: 'Quit Hyper?',
+          detail: 'All sessions will be closed.'
+        }, (index) => {
+          if (index === 0) {
+            next(action);
+          }
+        });
+
+        return;
+      }
+
+      break;
+    default:
+      // no special middleware for non-windows operating systems
+      break;
+  }
+
+  next(action);
 };
