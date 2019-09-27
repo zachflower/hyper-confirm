@@ -37,3 +37,24 @@ exports.onApp = (app) => {
   beforeQuitHandler = createBeforeQuitHandler(app);
   app.on('before-quit', beforeQuitHandler);
 }
+
+
+exports.middleware = (store) => (next) => (action) => {
+  switch ( action.type ) {
+    case 'CLOSE_TAB':
+      console.log("YOU SHALL NOT CLOSE!");
+      break;
+    case 'UI_COMMAND_EXEC':
+      if ( 'pane.close' == action.command ) {
+        console.log("YOU SHALL NOT CLOSE!");
+      }
+
+      next(action);
+      break;
+    default:
+      console.log("AHHHHH!");
+      console.log(action);
+      next(action);
+      break;
+  }
+};
