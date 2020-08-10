@@ -1,6 +1,6 @@
 const {dialog} = require('electron');
 
-let confirmQuit = false;
+let confirmQuit = true;
 let beforeQuitHandler;
 
 const createBeforeQuitHandler = app => {
@@ -53,7 +53,7 @@ exports.onApp = app => {
 exports.middleware = _ => next => action => {
   const {dialog, app} = require('electron').remote;
 
-  let confirmQuit = false;
+  let confirmQuit = true;
 
   if (typeof app.config.getConfig().confirmQuit !== undefined) {
     confirmQuit = Boolean(app.config.getConfig().confirmQuit);
