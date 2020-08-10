@@ -29,7 +29,7 @@ If you don't use `hpm`, add `hyper-confirm` to the `plugins` array in your Hyper
 
 ## Configuration
 
-As of `hyper-confirm` v1.0, the quit confirmation dialog is enabled by default. To disable it, add `confirmQuit: false` to the `config` object in your Hyper config file (typically found at `~/.hyper.js`):
+As of [v1.0.0](https://github.com/zachflower/hyper-confirm/releases/tag/v1.0.0), the quit confirmation dialog is enabled by default. To disable it, add `confirmQuit: false` to the `config` object in your Hyper config file (typically found at `~/.hyper.js`):
 
 ```javascript
   module.exports = {
