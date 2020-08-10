@@ -2,7 +2,13 @@
   "name": "hyper-confirm",
   "version": "0.2.0",
   "description": "Show a confirmation dialog before quitting Hyper",
-  "main": "index.js",
+  "author": "Zachary Flower <zach@flower.codes>",
+  "contributors": [
+    {
+      "name": "Zachary Flower",
+      "email": "zach@flower.codes"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/zachflower/hyper-confirm.git"
@@ -19,6 +25,15 @@
     "system",
     "confirm"
   ],
-  "author": "Zachary Flower <zach@zacharyflower.com>",
-  "license": "MIT"
+  "main": "index.js",
+  "scripts": {
+    "test": "xo"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "xo": "^0.32.1"
+  },
+  "xo": {
+    "space": 2
+  }
 }

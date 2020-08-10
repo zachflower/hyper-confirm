@@ -1,12 +1,12 @@
-const { dialog } = require('electron');
+const {dialog} = require('electron');
 
 let confirmQuit = false;
 let beforeQuitHandler;
 
-const createBeforeQuitHandler = (app) => {
+const createBeforeQuitHandler = app => {
   let quitConfirmed = false;
-  return (event) => {
-    if (confirmQuit && !quitConfirmed && app.getWindows().size ) {
+  return event => {
+    if (confirmQuit && !quitConfirmed && app.getWindows().size) {
       event.preventDefault();
       dialog.showMessageBox({
         type: 'question',
@@ -15,7 +15,7 @@ const createBeforeQuitHandler = (app) => {
         title: 'Quit Hyper?',
         message: 'Quit Hyper?',
         detail: 'All sessions will be closed.'
-      }, (index) => {
+      }, index => {
         if (index === 0) {
           quitConfirmed = true;
           app.quit();
@@ -25,21 +25,21 @@ const createBeforeQuitHandler = (app) => {
   };
 };
 
-exports.decorateConfig = (config) => {
+exports.decorateConfig = config => {
   if (typeof config.confirmQuit !== undefined) {
-    confirmQuit = !!config.confirmQuit;
+    confirmQuit = Boolean(config.confirmQuit);
   }
 
   return config;
 };
 
-exports.onApp = (app) => {
-  switch ( process.platform ) {
+exports.onApp = app => {
+  switch (process.platform) {
     case 'win32':
-      // windows confirmations happen in the middleware
+      // Windows confirmations happen in the middleware
       break;
     default:
-      if ( beforeQuitHandler ) {
+      if (beforeQuitHandler) {
         app.off('before-quit', beforeQuitHandler);
       }
 
@@ -50,18 +50,18 @@ exports.onApp = (app) => {
   }
 };
 
-exports.middleware = (store) => (next) => (action) => {
-  const { dialog, app } = require('electron').remote;
+exports.middleware = _ => next => action => {
+  const {dialog, app} = require('electron').remote;
 
   let confirmQuit = false;
 
-  if ( typeof app.config.getConfig().confirmQuit !== undefined ) {
-    confirmQuit = !!app.config.getConfig().confirmQuit;
+  if (typeof app.config.getConfig().confirmQuit !== undefined) {
+    confirmQuit = Boolean(app.config.getConfig().confirmQuit);
   }
 
-  switch ( process.platform ) {
+  switch (process.platform) {
     case 'win32':
-      if ( confirmQuit && action.type === 'UI_WINDOW_CLOSE' ) {
+      if (confirmQuit && action.type === 'UI_WINDOW_CLOSE') {
         dialog.showMessageBox({
           type: 'question',
           buttons: ['OK', 'Cancel'],
@@ -69,7 +69,7 @@ exports.middleware = (store) => (next) => (action) => {
           title: 'Quit Hyper?',
           message: 'Quit Hyper?',
           detail: 'All sessions will be closed.'
-        }, (index) => {
+        }, index => {
           if (index === 0) {
             next(action);
           }
@@ -80,7 +80,7 @@ exports.middleware = (store) => (next) => (action) => {
 
       break;
     default:
-      // no special middleware for non-windows operating systems
+      // No special middleware for non-windows operating systems
       break;
   }
 
