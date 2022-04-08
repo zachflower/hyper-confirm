@@ -1,4 +1,4 @@
-const {dialog} = require('electron');
+const dialog = require('electron').remote.dialog;
 
 let confirmQuit = true;
 let beforeQuitHandler;
